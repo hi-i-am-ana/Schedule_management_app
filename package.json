@@ -1,0 +1,33 @@
+{
+  "name": "project4",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "create_database": "createdb project4",
+    "create_tables": "psql Johawtree -h localhost -d project4 -f sql/create_tables.sql",
+    "seed_tables": "psql Johawtree -h localhost -d project4 -f sql/seed_tables.sql",
+    "start": "nodemon -e js,ejs,css,sql index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JHawtree/Project4.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JHawtree/Project4/issues"
+  },
+  "homepage": "https://github.com/JHawtree/Project4#readme",
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0",
+    "pg": "^8.5.1",
+    "pg-promise": "^10.9.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
