@@ -1,9 +1,12 @@
 const express = require('express')
 const app = express()
-const PORT = 4000
+const path = require('path')
+const PORT = process.env.PORT
 const morgan = require('morgan')
 const database = require('./db/db.js')
 const expressLayouts = require('express-ejs-layouts');
+
+
 
 app.use(express.json());
 app.use(expressLayouts);
@@ -25,5 +28,5 @@ app.use(bodyParser.json());
 app.use(morgan('dev'))
 
 app.listen(PORT, () => {
-    console.log(`server is listening on localhost:${PORT}!\n`)
+  console.log(`Server is listening on localhost:${PORT}!\n`)
 })
