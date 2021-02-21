@@ -4,10 +4,11 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "create_database": "createdb project4",
-    "create_tables": "psql Johawtree -h localhost -d project4 -f sql/create_tables.sql",
-    "seed_tables": "psql Johawtree -h localhost -d project4 -f sql/seed_tables.sql",
-    "start": "nodemon -e js,ejs,css,sql index.js",
+    "create_database": "createdb project4_app",
+    "create_tables": "psql anastasia -h localhost -d project4_app -f sql/create_tables.sql",
+    "seed_tables": "psql anastasia -h localhost -d project4_app -f sql/seed_tables.sql",
+    "start": "node -r dotenv/config app.js",
+    "dev": "nodemon -r dotenv/config -e js,ejs,css,sql app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -29,6 +30,7 @@
     "pg-promise": "^10.9.2"
   },
   "devDependencies": {
+    "dotenv": "^8.2.0",
     "nodemon": "^2.0.7"
   }
 }
