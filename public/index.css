@@ -56,12 +56,12 @@ nav > ul {
   list-style-type: none;
 }
 
-nav > ul > a {
+nav > ul a {
   display: block;
-  padding: 2rem 3rem;
+  padding: 2rem 2rem;
 }
 
-nav > ul > a:hover {
+nav > ul a:hover {
   color: grey;
 }
 
@@ -83,7 +83,6 @@ main {
 .table-title {
   position: sticky;
   top: 0;
-  background-color: white;
   border-bottom: 1px solid lightgrey;
   font-weight: 900;
   text-align: center;
@@ -92,15 +91,23 @@ main {
 .table-title, .table-field {
   padding: 0.5rem;
 }
-
-/* TODO: Change width of columns depending on their real size */
+/* TODO: Check if we need this line */
 .schedule-table > .table-title, .schedule-table > .table-field {
-  width: 16.66%;
   text-align: center;
 }
 
-/* 2nd and then every 4th child with .table-field, 3nd and then every 4th child with .table-field */
-.schedule-table > .table-field:nth-child(4n+2), .schedule-table > .table-field:nth-child(4n+3) {
+/* 1st and then every 6th child, 3nd and then every 6th child */
+.schedule-table > :nth-child(6n+1), .schedule-table :nth-child(6n+3) {
+  width: 10%;
+}
+
+/* 2nd and then every 6th child*/
+.schedule-table > :nth-child(6n+2), .schedule-table > :nth-child(6n+4), .schedule-table > :nth-child(6n+5), .schedule-table > :nth-child(6n+6) {
+  width: 20%;
+}
+
+/* 2nd and then every 6th child with .table-field */
+.schedule-table > .table-field:nth-child(6n+2) {
   padding-left: 2rem;
   text-align: left;
 }
