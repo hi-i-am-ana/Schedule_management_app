@@ -18,7 +18,14 @@ usersRouter.get('/:id(\\d+)', (req, res) => {
     row.start_time = new Date(row.start_time).toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'});
     row.end_time = new Date(row.end_time).toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'});
   })
-  .then((rows) => res.render('pages/user_profile', {rows: rows, title: 'User Profile | Mr.Coffee Schedule Management'}))
+  .then((rows) => {
+    console.log(rows)
+    if (rows.length === 0) {
+      res.status(404).send();
+    } else {
+      res.render('pages/user_profile', {rows: rows, title: 'User Profile | Mr.Coffee Schedule Management'})
+    }
+  })
   .catch((err) => res.render('pages/error', {err: err, title: 'Error | Mr.Coffee Schedule Management'}));
 });
 
