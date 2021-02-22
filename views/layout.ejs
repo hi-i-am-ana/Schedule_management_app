@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title%></title>
+  <link rel="stylesheet" href="/static/index.css">
+  <!-- TODO: Probably tranfer this script to a page where it is used -->
+  <script src="https://kit.fontawesome.com/0c3a972dba.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div class="body-container">
+    <%- include('partials/header'); -%>
+    <main>
+      <%- body%>
+    </main>
+  </div>
+  <%- script%>
+</body>
+</html>

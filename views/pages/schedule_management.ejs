@@ -1,0 +1,71 @@
+<h2>Add new schedule</h2>
+
+<form id="form" method="post" action="/new" novalidate>
+  <fieldset>
+    <label for="day">Day *</label>
+    <select class="form-field" id="day" name="day">
+      <option disabled selected value=""></option>
+      <option value='1'>Monday</option>
+      <option value='2'>Tuesday</option>
+      <option value='3'>Wednesday</option>
+      <option value='4'>Thursday</option>
+      <option value='5'>Friday</option>
+      <option value='6'>Saturday</option>
+      <option value='7'>Sunday</option>
+    </select>
+    <span class="tooltip-form-alert" id="day-empty-alert">Please select a day</span>
+  </fieldset>
+
+  <fieldset>
+    <label for="start_time">Start time *</label>
+    <input class="form-field" id="start_time" type="time" name="start_time">
+    <span class="tooltip-form-alert" id="start-time-empty-alert">Please select start time</span>
+  </fieldset>
+
+  <fieldset>
+    <label for="end_time">End time *</label>
+    <input class="form-field" id="end_time" type="time" name="end_time">
+    <span class="tooltip-form-alert" id="end-time-empty-alert">Please select end time</span>
+    <span class="tooltip-form-alert" id="time-invalid-alert">End time must be later that start time</span>
+  </fieldset>
+
+  <button type="submit">Save</button>
+</form>
+
+<!-- TODO: Delete if we don't need modal -->
+<!-- <%if (modal === 'opened') {%>
+  <div class="modal display-block" id="modal">
+    <div class="modal-content">
+      <i class="fas fa-check modal-text"></i>
+      <p class="modal-text">Thank you!</p>
+      <p class="modal-text">Your schedule has been saved</p>
+      <button id="close-modal-button" type="button">Close</a>
+    </div>
+  </div>
+<%} else {%>
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <i class="fas fa-check modal-text"></i>
+      <p class="modal-text">Thank you!</p>
+      <p class="modal-text">Your schedule has been saved</p>
+      <button id="close-modal-button" type="button">Close</a>
+    </div>
+  </div>
+<%}%> -->
+
+<h2>User schedules</h2>
+<!-- TODO: Add CSS for class .user_schedule-table -->
+<div class="table .user_schedule-table">
+  <div class="table-title">Schedule ID</div>
+  <div class="table-title">Day</div>
+  <div class="table-title">Start time</div>
+  <div class="table-title">End time</div>
+  <%for(let i=0; i < schedules.length; i++) {%>
+    <div class="table-field"><%= schedules[i].schedule_id%></div>
+    <div class="table-field"><%= schedules[i].day%></div>
+    <div class="table-field"><%= schedules[i].start_time%></div>
+    <div class="table-field"><%= schedules[i].end_time%></div>
+  <%}%>
+</div>
+
+<script src="/static/schedule_management.js" defer></script>
