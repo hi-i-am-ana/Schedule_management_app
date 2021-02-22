@@ -28,8 +28,13 @@ a {
   color: inherit;
 }
 
-h1, h2 {
+h1 {
   margin-bottom: 3rem;
+  text-align: center;
+}
+
+h2 {
+  margin: 3rem 0;
   text-align: center;
 }
 
@@ -78,6 +83,7 @@ main {
   width: 80%;
   margin: auto;
   box-shadow: 0 8px 32px 0 rgba(15, 32, 16, 0.37);
+  text-align: center;
 }
 
 .table-title {
@@ -85,15 +91,10 @@ main {
   top: 0;
   border-bottom: 1px solid lightgrey;
   font-weight: 900;
-  text-align: center;
 }
 
 .table-title, .table-field {
   padding: 0.5rem;
-}
-/* TODO: Check if we need this line */
-.schedule-table > .table-title, .schedule-table > .table-field {
-  text-align: center;
 }
 
 /* 1st and then every 6th child, 3nd and then every 6th child */
@@ -112,26 +113,14 @@ main {
   text-align: left;
 }
 
-.user-table > .table-field {
-  padding-left: 2rem;
+.user-table > .table-title, .user-table > .table-field {
+  width: 25%;
 }
 
-/* 1st and then every 4th child, 2nd and then every 4th child */
-.user-table > :nth-child(4n+1), .user-table :nth-child(4n+2) {
-  width: 15%;
+.user-schedule-table > .table-title, .user-schedule-table > .table-field {
+  width: 25%;
 }
 
-/* 3d and then every 4th child */
-.user-table > :nth-child(4n+3) {
-  width: 30%;
-  word-wrap: break-word;
-}
-
-/* every 4th child */
-.user-table > :nth-child(4n) {
-  width: 40%;
-  word-wrap: break-word;
-}
 /* end tables: users, schedules, user, user schedules */
 
 /* forms: user, user schedules */

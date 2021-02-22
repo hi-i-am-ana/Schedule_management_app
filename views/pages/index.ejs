@@ -9,7 +9,7 @@
   <div class="table-title">End time</div>
   <%for(let i=0; i < schedules.length; i++) {%>
     <div class="table-field"><%= schedules[i].user_id%></div>
-    <div class="table-field"><a href="<%= `users/:${schedules[i].user_id}`%>"><%= `${schedules[i].firstname} ${schedules[i].lastname}`%></a></div>
+    <div class="table-field"><a href="<%= `users/${schedules[i].user_id}`%>"><%= `${schedules[i].firstname} ${schedules[i].lastname}`%></a></div>
     <div class="table-field"><%= schedules[i].schedule_id%></div>
     <div class="table-field"><%= schedules[i].day%></div>
     <div class="table-field"><%= schedules[i].start_time%></div>

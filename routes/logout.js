@@ -1,5 +1,5 @@
 const express = require('express');
-logoutRouter = express.Router();
+const logoutRouter = express.Router();
 
 
 

@@ -1,6 +1,6 @@
 <h2>Add new schedule</h2>
 
-<form id="form" method="post" action="/new" novalidate>
+<form id="form" method="post" action="/schedule" novalidate>
   <fieldset>
     <label for="day">Day *</label>
     <select class="form-field" id="day" name="day">
@@ -32,30 +32,8 @@
   <button type="submit">Save</button>
 </form>
 
-<!-- TODO: Delete if we don't need modal -->
-<!-- <%if (modal === 'opened') {%>
-  <div class="modal display-block" id="modal">
-    <div class="modal-content">
-      <i class="fas fa-check modal-text"></i>
-      <p class="modal-text">Thank you!</p>
-      <p class="modal-text">Your schedule has been saved</p>
-      <button id="close-modal-button" type="button">Close</a>
-    </div>
-  </div>
-<%} else {%>
-  <div class="modal" id="modal">
-    <div class="modal-content">
-      <i class="fas fa-check modal-text"></i>
-      <p class="modal-text">Thank you!</p>
-      <p class="modal-text">Your schedule has been saved</p>
-      <button id="close-modal-button" type="button">Close</a>
-    </div>
-  </div>
-<%}%> -->
-
 <h2>User schedules</h2>
-<!-- TODO: Add CSS for class .user_schedule-table -->
-<div class="table .user_schedule-table">
+<div class="table user-schedule-table">
   <div class="table-title">Schedule ID</div>
   <div class="table-title">Day</div>
   <div class="table-title">Start time</div>
