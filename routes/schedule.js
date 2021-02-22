@@ -4,7 +4,7 @@ const scheduleRouter = express.Router();
 
 // Get user schedules
 scheduleRouter.get('/', (req, res) => {
-  db.each('SELECT * FROM schedules WHERE user_id = 1;', [], row => { // ADD USER ID HERE FROM SESSION
+  db.each('SELECT * FROM schedules WHERE user_id = 1 ORDER BY day ASC, start_time ASC, end_time ASC;', [], row => { // ADD USER ID HERE FROM SESSION
     const days = {
       1: 'Monday',
       2: 'Tuesday',

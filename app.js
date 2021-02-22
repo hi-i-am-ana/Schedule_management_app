@@ -49,7 +49,7 @@ app.use('/users', usersRouter);
 // Get list of schedules (home route)
 app.get('/', (req, res) => {
   // Use 'each' method for query to execute callback function to convert day from number to string
-  db.each('SELECT users.user_id, firstname, lastname, schedule_id, day, start_time, end_time FROM users LEFT JOIN schedules ON schedules.user_id = users.user_id ORDER BY user_id, day ASC, start_time ASC, end_time ASC;', [], row => {
+  db.each('SELECT users.user_id, firstname, lastname, schedule_id, day, start_time, end_time FROM users LEFT JOIN schedules ON schedules.user_id = users.user_id ORDER BY user_id ASC, day ASC, start_time ASC, end_time ASC;', [], row => {
     const days = {
       1: 'Monday',
       2: 'Tuesday',
