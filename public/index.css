@@ -1,0 +1,278 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  }
+
+html {
+  font-size: 10px;
+}
+
+body {
+  padding: 5rem 0;
+  font-family: 'Raleway', sans-serif;
+  font-size: 1.6rem;
+}
+
+.body-container {
+  width: 80%;
+  margin: auto;
+  min-height: calc(100vh - 10rem);
+  box-shadow: 0 8px 32px 0 rgba(15, 32, 16, 0.37);
+}
+
+a {
+  color: inherit;
+}
+
+h1, h2 {
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+/* TODO: Delete if not used */
+/* hr {
+  height: 1px;
+  background-color: black;
+  margin-bottom: 2rem;
+} */
+
+nav {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.nav-logo {
+  margin: 0 auto 0 2rem;
+  height: 4rem;
+}
+
+nav > ul {
+  display: flex;
+  list-style-type: none;
+}
+
+nav > ul > a {
+  display: block;
+  padding: 2rem 3rem;
+}
+
+nav > ul > a:hover {
+  color: grey;
+}
+
+main {
+  width: 90%;
+  margin: auto;
+  padding: 3rem 0;
+}
+
+/* tables: users, schedules, user, user schedules */
+.table {
+  display: flex;
+  flex-wrap: wrap;
+  width: 80%;
+  margin: auto;
+  box-shadow: 0 8px 32px 0 rgba(15, 32, 16, 0.37);
+}
+
+.table-title {
+  position: sticky;
+  top: 0;
+  background-color: white;
+  border-bottom: 1px solid lightgrey;
+  font-weight: 900;
+  text-align: center;
+}
+
+.table-title, .table-field {
+  padding: 0.5rem;
+}
+
+/* TODO: Change width of columns depending on their real size */
+.schedule-table > .table-title, .schedule-table > .table-field {
+  width: 16.66%;
+  text-align: center;
+}
+
+/* 2nd and then every 4th child with .table-field, 3nd and then every 4th child with .table-field */
+.schedule-table > .table-field:nth-child(4n+2), .schedule-table > .table-field:nth-child(4n+3) {
+  padding-left: 2rem;
+  text-align: left;
+}
+
+.user-table > .table-field {
+  padding-left: 2rem;
+}
+
+/* 1st and then every 4th child, 2nd and then every 4th child */
+.user-table > :nth-child(4n+1), .user-table :nth-child(4n+2) {
+  width: 15%;
+}
+
+/* 3d and then every 4th child */
+.user-table > :nth-child(4n+3) {
+  width: 30%;
+  word-wrap: break-word;
+}
+
+/* every 4th child */
+.user-table > :nth-child(4n) {
+  width: 40%;
+  word-wrap: break-word;
+}
+/* end tables: users, schedules, user, user schedules */
+
+/* forms: user, user schedules */
+/* TODO: Delete if not used */
+/* .email-exists-alert {
+  display: none;
+  margin-bottom: 2rem;
+  color: red;
+  text-align: center;
+}
+
+.display-block {
+  display: block;
+} */
+
+form {
+  width: 60%;
+  margin: auto;
+}
+
+fieldset {
+  position: relative;
+  margin-bottom: 2rem;
+  border: 0;
+}
+
+.form-field {
+  width: 100%;
+  padding: 1rem;
+  margin-top: 1rem;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.form-field:focus {
+  outline: 0;
+  border: 1px solid black;
+}
+
+button {
+  display: block;
+  width: 100%;
+  padding: 1.2rem 5rem;
+  background-color: lightgrey;
+  border: none;
+  box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.3);
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #c6c6c6;  
+}
+
+button:active {
+  background-color: #bababa;
+}
+
+button:focus {
+  outline: 0;
+}
+
+.tooltip-form-alert {
+  display: none;
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.5rem 0.5rem;
+  background-color: #eaeaea;
+  color: red;
+  text-align: center;
+  font-size: 1.3rem;
+}
+
+.tooltip-form-alert::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 0.5rem;
+  border-style: solid;
+  border-color: #eaeaea transparent transparent transparent;
+}
+/* end forms: user, user schedules */
+
+/* modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+}
+
+/* TODO: Delete if not used */
+/* .display-block {
+  display: block;
+} */
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  margin: 20% auto;
+  padding: 2rem;
+  background: #ffffff;
+}
+
+.modal-text {
+  margin-bottom: 2rem;
+}
+
+#close-modal-button {
+  margin: auto;
+  width: initial;
+}
+
+/* media 768 */
+@media screen and (max-width: 768px) {
+  html {
+    font-size: 9px;
+  }
+  .table {
+    width: 100%;
+  }
+}
+/* end media 768 */
+
+/* media 576 */
+@media screen and (max-width: 576px) {
+  html {
+    font-size: 8px;
+  }
+
+  body {
+    padding: 1rem 0;
+  }
+
+  .body-container {
+    width: 98%;
+    min-height: calc(100vh - 2rem);
+  }
+}
+/* end media 576 */
