@@ -9,7 +9,7 @@ const crypto = require('crypto');
 const expressLayouts = require('express-ejs-layouts');
 const morgan = require('morgan');
 
-const database = require('./db/db.js');
+const db = require('./db/db.js');
 
 const app = express();
 const PORT = process.env.PORT;
@@ -23,25 +23,48 @@ app.use(morgan('dev'));
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+app.set("layout extractScripts", true);
 
 // Add router for /login requests
-const loginRouter = require('./login.js');
+const loginRouter = require('./routes/login.js');
 app.use('/login', loginRouter);
 
 // Add router for /logout requests
-const logoutRouter = require('./logout.js');
+const logoutRouter = require('./routes/logout.js');
 app.use('/logout', logoutRouter);
 
 // Add router for /schedule requests
-const scheduleRouter = require('./schedule.js');
+const scheduleRouter = require('./routes/schedule.js');
 app.use('/schedule', scheduleRouter);
 
 // Add router for /signup requests
-const signupRouter = require('./signup.js');
+const signupRouter = require('./routes/signup.js');
 app.use('/signup', signupRouter);
 
 // Add router for user/ requests
-const userRouter = require('./user.js');
-app.use('/user', userRouter);
+const usersRouter = require('./routes/users.js');
+app.use('/users', usersRouter);
 
-app.listen(PORT, () => console.log(`Server is listening on localhost:${PORT}!\n`));
+
+// Get list of schedules (home route)
+app.get('/', (req, res) => {
+  // Use 'each' method for query to execute callback function to convert day from number to string
+  db.each('SELECT users.user_id, firstname, lastname, schedule_id, day, start_time, end_time FROM users LEFT JOIN schedules ON schedules.user_id = users.user_id ORDER BY user_id ASC, day ASC, start_time ASC, end_time ASC;', [], row => {
+    const days = {
+      1: 'Monday',
+      2: 'Tuesday',
+      3: 'Wednesday',
+      4: 'Thursday',
+      5: 'Friday',
+      6: 'Saturday',
+      7: 'Sunday'
+    };
+    row.day = days[row.day];
+    row.start_time = new Date(row.start_time).toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'});
+    row.end_time = new Date(row.end_time).toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'});
+  })
+  .then((schedules) => res.render('pages/index', {schedules: schedules, title: 'Home | Mr.Coffee Schedule Management'}))
+  .catch((err) => res.render('pages/error', {err: err, title: 'Error | Mr.Coffee Schedule Management'}));
+});
+
+app.listen(PORT, () => console.log(`Server is listening on localhost: ${PORT}!\n`));

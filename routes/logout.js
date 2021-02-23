@@ -1,9 +1,6 @@
 const express = require('express');
-logoutRouter = express.Router();
+const logoutRouter = express.Router();
 
-
-
-
-
+logoutRouter.get('/', (req, res) => res.redirect('/login')); // DELETE SESSION DATA HERE
 
 module.exports = logoutRouter;
