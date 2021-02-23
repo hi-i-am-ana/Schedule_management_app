@@ -19,7 +19,6 @@ usersRouter.get('/:id(\\d+)', (req, res) => {
     row.end_time = new Date(row.end_time).toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'});
   })
   .then((rows) => {
-    console.log(rows)
     if (rows.length === 0) {
       res.status(404).send();
     } else {
