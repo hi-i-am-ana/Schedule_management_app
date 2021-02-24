@@ -1,5 +1,6 @@
 const express = require('express');
-loginRouter = express.Router();
+const crypto = require('crypto');
+const loginRouter = express.Router();
 
 loginRouter.get('/', (req, res) => {
     res.render('pages/login', { title: "login"})
