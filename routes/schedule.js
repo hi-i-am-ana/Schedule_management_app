@@ -4,22 +4,26 @@ const scheduleRouter = express.Router();
 
 // Get user schedules
 scheduleRouter.get('/', (req, res) => {
-  db.each('SELECT * FROM schedules WHERE user_id = 1 ORDER BY day ASC, start_time ASC, end_time ASC;', [], row => { // ADD USER ID HERE FROM SESSION
-    const days = {
-      1: 'Monday',
-      2: 'Tuesday',
-      3: 'Wednesday',
-      4: 'Thursday',
-      5: 'Friday',
-      6: 'Saturday',
-      7: 'Sunday'
-    };
-    row.day = days[row.day];
-    row.start_time = new Date(row.start_time).toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'});
-    row.end_time = new Date(row.end_time).toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'});
-  })
-  .then((schedules) => res.render('pages/schedule_management', {schedules: schedules, title: 'Schedule Management | Mr.Coffee Schedule Management'}))
-  .catch((err) => res.render('pages/error', {err: err, title: 'Error | Mr.Coffee Schedule Management'}));
+  if (req.user) {
+    db.each('SELECT * FROM schedules WHERE user_id = $1 ORDER BY day ASC, start_time ASC, end_time ASC;', req.user.user_id, row => { // ADD USER ID HERE FROM SESSION - ADDED
+      const days = {
+        1: 'Monday',
+        2: 'Tuesday',
+        3: 'Wednesday',
+        4: 'Thursday',
+        5: 'Friday',
+        6: 'Saturday',
+        7: 'Sunday'
+      };
+      row.day = days[row.day];
+      row.start_time = new Date(row.start_time).toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'});
+      row.end_time = new Date(row.end_time).toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'});
+    })
+    .then((schedules) => res.render('pages/schedule_management', {schedules: schedules, title: 'Schedule Management | Mr.Coffee Schedule Management'}))
+    .catch((err) => res.render('pages/error', {err: err, title: 'Error | Mr.Coffee Schedule Management'}));
+  } else {
+    res.redirect('/login'); // ADD MESSAGE HERE
+  };
 });
 
 scheduleRouter.post('/', (req, res) => {
@@ -34,7 +38,7 @@ scheduleRouter.post('/', (req, res) => {
   end_time.setHours(end_hours, end_minutes)
 
   newSchedule = {
-    user_id: 1, // ADD USER ID HERE FROM SESSION
+    user_id: req.user.user_id, // ADD USER ID HERE FROM SESSION - ADDED
     day: +req.body.day,
     start_time: start_time,
     end_time: end_time
