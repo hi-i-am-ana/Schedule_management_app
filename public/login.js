@@ -35,11 +35,11 @@ form.onsubmit = (event) => {
 
 const inputNotEmpty = (inputValue) => inputValue !== '';
 
-// const setInvalid = (inputAlert, input) => {
-//   inputAlert.style.display = 'inline';
-//   input.style.border = 'solid 1px red';
-//   validForm = false;
-// };
+const setInvalid = (inputAlert, input) => {
+  inputAlert.style.display = 'inline';
+  input.style.border = 'solid 1px red';
+  validForm = false;
+};
 
 const clearValidation = () => {
   validForm = true;

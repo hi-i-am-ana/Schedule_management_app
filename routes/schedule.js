@@ -4,8 +4,8 @@ const scheduleRouter = express.Router();
 
 // Get user schedules
 scheduleRouter.get('/', (req, res) => {
-  if (req.user) {
-    db.each('SELECT * FROM schedules WHERE user_id = $1 ORDER BY day ASC, start_time ASC, end_time ASC;', req.user.user_id, row => { // ADD USER ID HERE FROM SESSION - ADDED
+  if (req.session.user) {
+    db.each('SELECT * FROM schedules WHERE user_id = $1 ORDER BY day ASC, start_time ASC, end_time ASC;', req.session.user.user_id, row => {
       const days = {
         1: 'Monday',
         2: 'Tuesday',
@@ -19,13 +19,22 @@ scheduleRouter.get('/', (req, res) => {
       row.start_time = new Date(row.start_time).toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'});
       row.end_time = new Date(row.end_time).toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'});
     })
-    .then((schedules) => res.render('pages/schedule_management', {schedules: schedules, title: 'Schedule Management | Mr.Coffee Schedule Management'}))
+    .then((schedules) => {
+      res.render('pages/schedule_management', {
+        schedules: schedules,
+        title: 'Schedule Management | Mr.Coffee Schedule Management',
+        firstname: req.session.user.firstname,
+        lastname: req.session.user.lastname,
+        user_id: req.session.user.user_id
+      });
+    })
     .catch((err) => res.render('pages/error', {err: err, title: 'Error | Mr.Coffee Schedule Management'}));
   } else {
     res.redirect('/login'); // ADD MESSAGE HERE
   };
 });
 
+// Post new schedule
 scheduleRouter.post('/', (req, res) => {
   const start_hours = req.body.start_time.substring(0,2)
   const start_minutes = req.body.start_time.substring(3)
@@ -38,7 +47,7 @@ scheduleRouter.post('/', (req, res) => {
   end_time.setHours(end_hours, end_minutes)
 
   newSchedule = {
-    user_id: req.user.user_id, // ADD USER ID HERE FROM SESSION - ADDED
+    user_id: req.session.user.user_id,
     day: +req.body.day,
     start_time: start_time,
     end_time: end_time
@@ -49,7 +58,7 @@ scheduleRouter.post('/', (req, res) => {
   .then(() => {
     //const query = querystring.stringify({modal: 'opened'});
     //res.redirect(`/schedule?${query}`);
-    res.redirect('/schedule');
+    res.redirect('/schedule#user-schedules-title');
   })
   .catch((err) => res.render('pages/error', {err: err, title: 'Error | Mr.Coffee Schedule Management'}));
 });

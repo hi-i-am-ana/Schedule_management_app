@@ -9,6 +9,7 @@
     "seed_tables": "psql anastasia -h localhost -d project4_app -f sql/seed_tables.sql",
     "start": "node -r dotenv/config app.js",
     "dev": "nodemon -r dotenv/config -e js,ejs,css,sql app.js",
+    "session": "DEBUG=express-session nodemon -r dotenv/config -e js,ejs,css,sql app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -27,6 +28,7 @@
     "ejs": "^3.1.6",
     "express": "^4.17.1",
     "express-ejs-layouts": "^2.5.0",
+    "express-session": "^1.17.1",
     "morgan": "^1.10.0",
     "pg": "^8.5.1",
     "pg-promise": "^10.9.2"

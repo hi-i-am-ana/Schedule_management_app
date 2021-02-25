@@ -4,7 +4,7 @@ const usersRouter = express.Router();
 
 // Get user info and schedules
 usersRouter.get('/:id(\\d+)', (req, res) => {
-  if (req.user) {
+  if (req.session.user) {
     db.each('SELECT users.user_id, firstname, lastname, email, schedule_id, day, start_time, end_time FROM users LEFT JOIN schedules ON schedules.user_id = users.user_id WHERE users.user_id = $1 ORDER BY day ASC, start_time ASC, end_time ASC;', req.params.id, row => {
       const days = {
         1: 'Monday',
