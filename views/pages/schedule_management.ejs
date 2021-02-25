@@ -1,4 +1,4 @@
-<h2>Add new schedule</h2>
+<h2>Add new schedule for <a href="<%= `users/${user_id}`%>"><%= `${firstname} ${lastname}`%></a></h2>
 
 <form id="form" method="post" action="/schedule" novalidate>
   <fieldset>
@@ -32,7 +32,7 @@
   <button type="submit">Save</button>
 </form>
 
-<h2>User schedules</h2>
+<h2 id="user-schedules-title"><%= firstname%>'s schedules</h2>
 <div class="table user-schedule-table">
   <div class="table-title">Schedule ID</div>
   <div class="table-title">Day</div>

@@ -38,6 +38,10 @@ h2 {
   text-align: center;
 }
 
+main > h2:first-of-type {
+  margin: 0 0 3rem;
+}
+
 /* TODO: Delete if not used */
 /* hr {
   height: 1px;
@@ -74,6 +78,11 @@ main {
   width: 90%;
   margin: auto;
   padding: 3rem 0;
+}
+
+.signup-link {
+  margin-top: 3rem;
+  text-align: center;
 }
 
 /* tables: users, schedules, user, user schedules */
