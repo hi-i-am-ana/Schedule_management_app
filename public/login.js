@@ -8,6 +8,10 @@ const password = document.getElementById('password');
 const emailEmptyAlert = document.getElementById('email-empty-alert');
 const passwordEmptyAlert = document.getElementById('password-empty-alert');
 
+// Select invalid Alerts
+const emailInvalidAlert = document.getElementById('email-invalid-alert');
+const passwordInvalidAlert = document.getElementById('password-invalid-alert');
+
 // Create variable to save validation status
 let validForm;
 
@@ -17,6 +21,20 @@ form.onsubmit = (event) => {
   const passwordValue = password.value;
 
   clearValidation();
+
+  // Validate email (must not be empty)
+  if (!inputNotEmpty(emailValue)) {
+    setInvalid(emailEmptyAlert, email);
+  } else if (!checkemail(emailValue)) {
+    setInvalid(emailInvalidAlert, email);
+  };
+  
+  // Validate password (must not be empty)
+  if (!inputNotEmpty(passwordValue)) {
+    setInvalid(passwordEmptyAlert, password);
+  } else if (!checkpassword(passwordValue)) {
+    setInvalid(passwordInvalidAlert, password);
+  };
 
   // Validate email (must not be empty)
   if (!inputNotEmpty(emailValue)) {
@@ -34,6 +52,16 @@ form.onsubmit = (event) => {
 };
 
 const inputNotEmpty = (inputValue) => inputValue !== '';
+
+function checkemail(variable) {
+  let str = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  return str.test(variable)
+}
+
+function checkpassword (variable) {
+  let str = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\S+$).{8,}$/
+  return str.test(variable)
+}
 
 const setInvalid = (inputAlert, input) => {
   inputAlert.style.display = 'inline';

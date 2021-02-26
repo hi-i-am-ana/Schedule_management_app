@@ -4,34 +4,40 @@
 
   <fieldset>
     <label for="firstname">First Name*</label>
-    <input class="form-field" input type="text" id="firstname" name="firstname">
+    <input class="form-field" type="text" id="firstname" name="firstname">
     <span class="tooltip-form-alert" id="firstname-empty-alert">Please enter your first name</span>
+    <span class="tooltip-form-alert" id="firstname-invalid-alert">First name has invalid format</span>
   </fieldset>
     
   <fieldset>
     <label for="lastname">Last Name*</label>
-    <input class="form-field" input type="text" id="lastname" name="lastname">
+    <input class="form-field" type="text" id="lastname" name="lastname">
     <span class="tooltip-form-alert" id="lastname-empty-alert">Please enter your last name</span>
+    <span class="tooltip-form-alert" id="lastname-invalid-alert">Last name has invalid format</span>
   </fieldset>
 
   <fieldset>
     <label for="email">Email*</label>
-    <input class="form-field" input type="email" id="email" name="email">
+    <input class="form-field" type="email" id="email" name="email">
     <span class="tooltip-form-alert" id="email-empty-alert">Please enter your email address</span>
+    <span class="tooltip-form-alert" id="email-invalid-alert">Email has invalid format</span>
   </fieldset>
 
   <fieldset>
     <label for="password">Password*</label>
-    <input class="form-field" input type="password" id="password" name="password">
+    <input class="form-field" type="password" id="password" name="password">
     <span class="tooltip-form-alert" id="password-empty-alert">Please enter your password</span>
+    <span class="tooltip-form-alert" id="password-invalid-alert">Password has invalid format</span>
   </fieldset>
 
   <fieldset>
-    <label for="password">Confirm Password*</label>
-    <input class="form-field" input type="password" id="confirm-password" name="confirm-password">
-    <span class="tooltip-form-alert" id="password-match-alert">Please enter your password</span>
-    <span class="tooltip-form-alert" id="password-match-alert">Passwords do not match</span>
+    <label for="confirmPassword">Confirm Password*</label>
+    <input class="form-field" type="password" id="confirmPassword" name="confirmPassword">
+    <span class="tooltip-form-alert" id="confirmPassword-empty-alert">Please enter your password</span>
+    <span class="tooltip-form-alert" id="confirmPassword-match-alert">Passwords do not match</span>
   </fieldset>
 
   <button type="submit" id="submit-button">Sign Up</button>
 </form>
+
+<script src="/static/signup.js" defer></script>
