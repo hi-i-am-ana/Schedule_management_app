@@ -1,3 +1,4 @@
+// TODO: Use shared signup validation here (module should be added with script tag)
 const form = document.getElementById('form');
 
 // Select input fields
@@ -7,7 +8,6 @@ const email = document.getElementById('email');
 const password = document.getElementById('password');
 const confirmPassword = document.getElementById('confirmPassword');
 
-
 // Select validation alerts
 const firstnameEmptyAlert = document.getElementById('firstname-empty-alert');
 const lastnameEmptyAlert = document.getElementById('lastname-empty-alert');
@@ -15,12 +15,25 @@ const emailEmptyAlert = document.getElementById('email-empty-alert');
 const passwordEmptyAlert = document.getElementById('password-empty-alert');
 const confirmPasswordEmptyAlert = document.getElementById('confirmPassword-empty-alert');
 
-// Select Invalid alerts
+// Select invalid alerts
 const firstnameInvalidAlert = document.getElementById('firstname-invalid-alert');
 const lastnameInvalidAlert = document.getElementById('lastname-invalid-alert');
 const emailInvalidAlert = document.getElementById('email-invalid-alert');
 const passwordInvalidAlert = document.getElementById('password-invalid-alert');
 const confirmPasswordMatchAlert = document.getElementById("confirmPassword-match-alert");
+
+// Select email exists alert - only to clear server-side validation
+const emailExistsAlert = document.getElementById('email-exists-alert');
+
+const passwordInfo = document.getElementById('password-info');
+
+// Show and hide tooltip with password requirements info
+password.onfocus = () => {
+  passwordInfo.classList.add('display-inline');
+}
+password.onblur = () => {
+  passwordInfo.classList.remove('display-inline');
+}
 
 // Create variable to save validation status
 let validForm;
@@ -33,58 +46,41 @@ form.onsubmit = (event) => {
   const passwordValue = password.value;
   const confirmPasswordValue = confirmPassword.value;
 
-
   clearValidation();
 
-  // Validate first name (must not be empty)
+  // Validate first name (must not be empty and have valid format)
   if (!inputNotEmpty(firstnameValue)) {
     setInvalid(firstnameEmptyAlert, firstname);
   } else if (!nameValid(firstnameValue)) {
     setInvalid(firstnameInvalidAlert, firstname);
   };
 
-  // Validate last name (must not be empty)
+  // Validate last name (must not be empty and have valid format)
   if (!inputNotEmpty(lastnameValue)) {
     setInvalid(lastnameEmptyAlert, lastname);
   } else if (!nameValid(lastnameValue)) {
     setInvalid(lastnameInvalidAlert, lastname);
   };
 
-  // Validate email (must not be empty)
+  // Validate email (must not be empty and have valid format)
   if (!inputNotEmpty(emailValue)) {
     setInvalid(emailEmptyAlert, email);
-  } else if (!checkemail(emailValue)) {
+  } else if (!emailValid(emailValue)) {
     setInvalid(emailInvalidAlert, email);
   };
 
-  // Validate password (must not be empty)
+  // Validate password (must not be empty and have valid format)
   if (!inputNotEmpty(passwordValue)) {
     setInvalid(passwordEmptyAlert, password);
-  } else if (!checkpassword(passwordValue)) {
+  } else if (!passwordValid(passwordValue)) {
     setInvalid(passwordInvalidAlert, password);
   };
 
-  // Validate password (must not be empty)
+  // Validate confirm password (must not be empty and match password)
   if (!inputNotEmpty(confirmPasswordValue)) {
     setInvalid(confirmPasswordEmptyAlert, confirmPassword);
-  } else if (!checkpassword(confirmPasswordValue)) {
+  } else if (!passwordMatch(passwordValue,confirmPasswordValue)) {
     setInvalid(confirmPasswordMatchAlert, confirmPassword);
-  };
-
-// At least 8 chars
-
-// Contains at least one digit
-
-// Contains at least one lower alpha char and one upper alpha char
-
-// Contains at least one char within a set of special chars (@#%$^ etc.)
-
-// Does not contain space, tab, etc.
-
-
-
-  if (!inputNotEmpty(confirmPasswordValue)) {
-    setInvalid(confirmPasswordEmptyAlert, confirmPassword);
   };
 
   if (!validForm) {
@@ -94,46 +90,56 @@ form.onsubmit = (event) => {
 
 const inputNotEmpty = (inputValue) => inputValue !== '';
 
-// function checkname(variable) {
-//   let str = /^[a-zA-Z][^0-9_.,!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]*$/
-//   return str.test(variable)
-// }
-
 const nameValid = (inputValue) => {
   const nameRegex = /^[a-zA-Z][^0-9_.,!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]*$/;
   return nameRegex.test(inputValue);
 };
 
-function checkemail(variable) {
-  let str = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-  return str.test(variable)
-}
+const emailValid = (inputValue) => {
+  const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return emailRegex.test(inputValue);
+};
 
-function checkpassword (variable) {
-  let str = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\S+$).{8,}$/
-  return str.test(variable)
-}
+const passwordValid = (inputValue) => {
+  const passwordRegex = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\S+$).{8,}$/;
+  return passwordRegex.test(inputValue);
+};
+
+const passwordMatch = (passwordValue, confirmPasswordValue) => passwordValue === confirmPasswordValue;
 
 const setInvalid = (inputAlert, input) => {
-  inputAlert.style.display = 'inline';
-  input.style.border = 'solid 1px red';
+  inputAlert.classList.add('display-inline');
+  input.classList.add('red-border');
   validForm = false;
 };
 
 const clearValidation = () => {
   validForm = true;
 
-  firstnameEmptyAlert.style.display = 'none';
-  lastnameEmptyAlert.style.display = 'none';
-  emailEmptyAlert.style.display = 'none';
-  passwordEmptyAlert.style.display = 'none';
-  confirmPasswordEmptyAlert.style.display = 'none';
+  firstnameEmptyAlert.classList.remove('display-inline');
+  lastnameEmptyAlert.classList.remove('display-inline');
+  emailEmptyAlert.classList.remove('display-inline');
+  passwordEmptyAlert.classList.remove('display-inline');
+  confirmPasswordEmptyAlert.classList.remove('display-inline');
 
+  firstnameInvalidAlert.classList.remove('display-inline');
+  lastnameInvalidAlert.classList.remove('display-inline');
+  emailInvalidAlert.classList.remove('display-inline');
+  passwordInvalidAlert.classList.remove('display-inline');
+  confirmPasswordMatchAlert.classList.remove('display-inline');
 
-  firstname.style.border = '';
-  lastname.style.border = '';
-  email.style.border = '';
-  password.style.border = '';
-  confirmPassword.style.border = '';
+  emailExistsAlert.classList.remove('display-inline');
 
+  firstname.classList.remove('red-border');
+  lastname.classList.remove('red-border');
+  email.classList.remove('red-border');
+  password.classList.remove('red-border');
+  confirmPassword.classList.remove('red-border');
 };
+
+// Password:
+// At least 8 chars
+// Contains at least one digit
+// Contains at least one lower alpha char and one upper alpha char
+// Contains at least one char within a set of special chars (@#%$^ etc.)
+// Does not contain space, tab, etc.

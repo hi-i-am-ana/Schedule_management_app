@@ -1,4 +1,4 @@
-<h2>Add new schedule for <a href="<%= `users/${user_id}`%>"><%= `${firstname} ${lastname}`%></a></h2>
+<h2>Add new schedule for <%= `${current_user.firstname} ${current_user.lastname}`%></h2>
 
 <form id="form" method="post" action="/schedule" novalidate>
   <fieldset>
@@ -29,21 +29,43 @@
     <span class="tooltip-form-alert" id="time-invalid-alert">End time must be later that start time</span>
   </fieldset>
 
-  <button type="submit">Save</button>
+  <button class="button" type="submit">Save</button>
 </form>
 
-<h2 id="user-schedules-title"><%= firstname%>'s schedules</h2>
-<div class="table user-schedule-table">
-  <div class="table-title">Schedule ID</div>
-  <div class="table-title">Day</div>
-  <div class="table-title">Start time</div>
-  <div class="table-title">End time</div>
-  <%for(let i=0; i < schedules.length; i++) {%>
-    <div class="table-field"><%= schedules[i].schedule_id%></div>
-    <div class="table-field"><%= schedules[i].day%></div>
-    <div class="table-field"><%= schedules[i].start_time%></div>
-    <div class="table-field"><%= schedules[i].end_time%></div>
-  <%}%>
-</div>
+<h2 id="user-schedules-title"><%= current_user.firstname%>'s schedules</h2>
+<%if(schedules.length!==0) {%>
+  <div class="table current-user-schedule-table">
+    <div class="table-title">Schedule ID</div>
+    <div class="table-title">Day</div>
+    <div class="table-title">Start time</div>
+    <div class="table-title">End time</div>
+    <div class="table-title">Delete</div>
+    
+    <%for(let i=0; i < schedules.length; i++) {%>
+      <div class="table-field"><%= schedules[i].schedule_id%></div>
+      <div class="table-field"><%= schedules[i].day%></div>
+      <div class="table-field"><%= schedules[i].start_time%></div>
+      <div class="table-field"><%= schedules[i].end_time%></div>
+      <div class="table-field">
+        <form method="post" action="/schedule/<%= schedules[i].schedule_id%>?_method=DELETE">
+          <input type="hidden" name="schedule" value="<%= schedules[i].schedule_id%>">
+          <button class="delete-schedule-button" type="submit"><i class="fas fa-trash-alt"></i></button>
+        </form>
+      </div>
+    <%}%>
+  </div>
+<%} else {%>
+  <p class="centered-paragraph"><%= current_user.firstname%> doesn't have saved schedules yet</p>
+<%}%>
+
+<%if (modal === 'opened') {%>
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <i class="fas fa-check modal-text"></i>
+      <p class="modal-text">Your schedule has been saved</p>
+      <a href="/schedule#user-schedules-title"><button class="button" id="close-modal-button" type="button">Close</button></a>
+    </div>
+  </div>
+<%}%>
 
 <script src="/static/schedule_management.js" defer></script>

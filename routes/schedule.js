@@ -1,37 +1,34 @@
 const express = require('express');
+const querystring = require('querystring');
 const db = require('../db/db.js');
+const loggedOutCheck = require('../middleware.js').loggedOutCheck;
 const scheduleRouter = express.Router();
 
 // Get user schedules
-scheduleRouter.get('/', (req, res) => {
-  if (req.session.user) {
-    db.each('SELECT * FROM schedules WHERE user_id = $1 ORDER BY day ASC, start_time ASC, end_time ASC;', req.session.user.user_id, row => {
-      const days = {
-        1: 'Monday',
-        2: 'Tuesday',
-        3: 'Wednesday',
-        4: 'Thursday',
-        5: 'Friday',
-        6: 'Saturday',
-        7: 'Sunday'
-      };
-      row.day = days[row.day];
-      row.start_time = new Date(row.start_time).toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'});
-      row.end_time = new Date(row.end_time).toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'});
-    })
-    .then((schedules) => {
-      res.render('pages/schedule_management', {
-        schedules: schedules,
-        title: 'Schedule Management | Mr.Coffee Schedule Management',
-        firstname: req.session.user.firstname,
-        lastname: req.session.user.lastname,
-        user_id: req.session.user.user_id
-      });
-    })
-    .catch((err) => res.render('pages/error', {err: err, title: 'Error | Mr.Coffee Schedule Management'}));
-  } else {
-    res.redirect('/login'); // ADD MESSAGE HERE
-  };
+scheduleRouter.get('/', loggedOutCheck, (req, res) => {
+  db.each('SELECT * FROM schedules WHERE user_id = $1 ORDER BY day ASC, start_time ASC, end_time ASC;', req.session.user.user_id, row => {
+    const days = {
+      1: 'Monday',
+      2: 'Tuesday',
+      3: 'Wednesday',
+      4: 'Thursday',
+      5: 'Friday',
+      6: 'Saturday',
+      7: 'Sunday'
+    };
+    row.day = days[row.day];
+    row.start_time = new Date(row.start_time).toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'});
+    row.end_time = new Date(row.end_time).toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'});
+  })
+  .then((schedules) => {
+    res.render('pages/schedule_management', {
+      schedules: schedules,
+      title: 'Schedule Management | Mr.Coffee Schedule Management',
+      current_user: req.session.user,
+      modal: req.query.modal
+    });
+  })
+  .catch((err) => res.render('pages/error', {err: err, title: 'Error | Mr.Coffee Schedule Management', current_user: req.session.user}));
 });
 
 // Post new schedule
@@ -56,11 +53,21 @@ scheduleRouter.post('/', (req, res) => {
   db.none('INSERT INTO schedules (user_id, day, start_time, end_time) VALUES (${newSchedule.user_id}, ${newSchedule.day}, ${newSchedule.start_time}, ${newSchedule.end_time});', {newSchedule})
   // Redirect back to schedule management page, but passing {modal: 'opened'} as a query string to get route => page will be rendered considering this additional info (with modal opened)
   .then(() => {
-    //const query = querystring.stringify({modal: 'opened'});
-    //res.redirect(`/schedule?${query}`);
-    res.redirect('/schedule#user-schedules-title');
+    const query = querystring.stringify({modal: 'opened'});
+    res.redirect(`/schedule?${query}`);
+    //res.redirect('/schedule#user-schedules-title');
   })
-  .catch((err) => res.render('pages/error', {err: err, title: 'Error | Mr.Coffee Schedule Management'}));
+  .catch((err) => res.render('pages/error', {err: err, title: 'Error | Mr.Coffee Schedule Management', current_user: req.session.user}));
+});
+
+// Delete schedule
+scheduleRouter.delete('/:id', (req,res) => {
+  // console.log(req.body);
+  // console.log(req.method);
+  // console.log(req.originalMethod);
+  db.none('DELETE FROM schedules WHERE schedule_id = $1;', req.body.schedule)
+  .then(() => res.redirect('/schedule#user-schedules-title'))
+  .catch((err) => res.render('pages/error', {err: err, title: 'Error | Mr.Coffee Schedule Management', current_user: req.session.user}));
 });
 
 module.exports = scheduleRouter;

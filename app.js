@@ -2,20 +2,18 @@ const express = require('express');
 const path = require('path');
 
 const session = require('express-session');
-const cookieParser = require('cookie-parser')
 const expressLayouts = require('express-ejs-layouts');
+const methodOverride = require('method-override');
 const morgan = require('morgan');
 
 const app = express();
 const PORT = process.env.PORT;
 
-// TODO: express-session should work without cookie-parser
-//app.use(cookieParser('I like to sing, sing in the shower. Ah-ha!'));
-app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(expressLayouts);
+app.use(methodOverride('_method')); // must be called after body parser
 app.use('/static', express.static(path.join(__dirname, 'public')));
 app.use(morgan('dev')); // static routes won't be logged if logger is instantiated after static routes
 
@@ -56,8 +54,17 @@ app.use('/signup', signupRouter);
 const usersRouter = require('./routes/users.js');
 app.use('/users', usersRouter);
 
-// Add router for / requests
+// Add router for / requests (should be after all other routers)
 const homeRouter = require('./routes/index.js');
 app.use('/', homeRouter);
 
-app.listen(PORT, () => console.log(`Server is listening on localhost:${PORT}!\n`));
+// Add route for handling 404 requests - unavailable routes (should be in the end)
+app.use((req, res, next) => {
+  res.status(404).render('pages/error', {
+    err: {message: 'HTTP ERROR 404. This page can not be found'},
+    title: 'Error | Mr.Coffee Schedule Management',
+    current_user: req.session.user
+  });
+});
+
+app.listen(PORT, () => console.log(`Server is listening on localhost:${PORT}\n`));
