@@ -11,10 +11,6 @@ const startTimeEmptyAlert = document.getElementById('start-time-empty-alert');
 const endTimeEmptyAlert = document.getElementById('end-time-empty-alert');
 const timeInvalidAlert = document.getElementById('time-invalid-alert');
 
-// TODO: Delete if we don't have modal
-// const closeModalButton = document.getElementById('close-modal-button');
-// const modal = document.getElementById('modal');
-
 // Create variable to save validation status
 let validForm;
 
@@ -50,11 +46,6 @@ form.onsubmit = (event) => {
     event.preventDefault();
   };
 };
-
-// TODO: Delete if we don't have modal
-// closeModalButton.onclick = (event) => {
-//   modal.classList.remove('display-block');
-// }
 
 const inputNotEmpty = (inputValue) => inputValue !== '';
 

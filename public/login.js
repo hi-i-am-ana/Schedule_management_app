@@ -1,3 +1,4 @@
+// TODO: Use shared login validation here (module should be added with script tag)
 const form = document.getElementById('form');
 
 // Select input fields
@@ -8,9 +9,13 @@ const password = document.getElementById('password');
 const emailEmptyAlert = document.getElementById('email-empty-alert');
 const passwordEmptyAlert = document.getElementById('password-empty-alert');
 
-// Select invalid Alerts
+// Select invalid alerts
 const emailInvalidAlert = document.getElementById('email-invalid-alert');
 const passwordInvalidAlert = document.getElementById('password-invalid-alert');
+
+// Select email missing and password incorrect alerts - only to clear server-side validation
+const emailMissingAlert = document.getElementById('email-missing-alert');
+const passwordIncorrectAlert = document.getElementById('password-incorrect-alert');
 
 // Create variable to save validation status
 let validForm;
@@ -22,28 +27,18 @@ form.onsubmit = (event) => {
 
   clearValidation();
 
-  // Validate email (must not be empty)
+  // Validate email (must not be empty and have valid format)
   if (!inputNotEmpty(emailValue)) {
     setInvalid(emailEmptyAlert, email);
-  } else if (!checkemail(emailValue)) {
+  } else if (!emailValid(emailValue)) {
     setInvalid(emailInvalidAlert, email);
   };
-  
-  // Validate password (must not be empty)
+
+  // Validate password (must not be empty and have valid format)
   if (!inputNotEmpty(passwordValue)) {
     setInvalid(passwordEmptyAlert, password);
-  } else if (!checkpassword(passwordValue)) {
+  } else if (!passwordValid(passwordValue)) {
     setInvalid(passwordInvalidAlert, password);
-  };
-
-  // Validate email (must not be empty)
-  if (!inputNotEmpty(emailValue)) {
-    setInvalid(emailEmptyAlert, email);
-  };
-
-  // Validate password (must not be empty)
-  if (!inputNotEmpty(passwordValue)) {
-    setInvalid(passwordEmptyAlert, password);
   };
 
   if (!validForm) {
@@ -53,28 +48,34 @@ form.onsubmit = (event) => {
 
 const inputNotEmpty = (inputValue) => inputValue !== '';
 
-function checkemail(variable) {
-  let str = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-  return str.test(variable)
-}
+const emailValid = (inputValue) => {
+  const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return emailRegex.test(inputValue);
+};
 
-function checkpassword (variable) {
-  let str = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\S+$).{8,}$/
-  return str.test(variable)
-}
+const passwordValid = (inputValue) => {
+  const passwordRegex = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\S+$).{8,}$/;
+  return passwordRegex.test(inputValue);
+};
 
 const setInvalid = (inputAlert, input) => {
-  inputAlert.style.display = 'inline';
-  input.style.border = 'solid 1px red';
+  inputAlert.classList.add('display-inline');
+  input.classList.add('red-border');
   validForm = false;
 };
 
 const clearValidation = () => {
   validForm = true;
 
-  emailEmptyAlert.style.display = 'none';
-  passwordEmptyAlert.style.display = 'none';
+  emailEmptyAlert.classList.remove('display-inline');
+  passwordEmptyAlert.classList.remove('display-inline');
 
-  email.style.border = '';
-  password.style.border = '';
+  emailInvalidAlert.classList.remove('display-inline');
+  passwordInvalidAlert.classList.remove('display-inline');
+
+  emailMissingAlert.classList.remove('display-inline');
+  passwordIncorrectAlert.classList.remove('display-inline');
+
+  email.classList.remove('red-border');
+  password.classList.remove('red-border');
 };

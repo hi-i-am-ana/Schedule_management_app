@@ -4,10 +4,10 @@
   <div class="table-title">First name</div>
   <div class="table-title">Last name</div>
   <div class="table-title">Email</div>
-  <div class="table-field"><%= rows[0].user_id%></div>
-  <div class="table-field"><%= rows[0].firstname%></div>
-  <div class="table-field"><%= rows[0].lastname%></div>
-  <div class="table-field"><%= rows[0].email%></div>
+  <div class="table-field"><%= user.user_id%></div>
+  <div class="table-field"><%= user.firstname%></div>
+  <div class="table-field"><%= user.lastname%></div>
+  <div class="table-field"><%= user.email%></div>
 </div>
 
 <h2>User schedules</h2>
@@ -16,12 +16,10 @@
   <div class="table-title">Day</div>
   <div class="table-title">Start time</div>
   <div class="table-title">End time</div>
-  <%for(let i=0; i < rows.length; i++) {%>
-    <%if (rows[i].schedule_id !== null) {%>
-      <div class="table-field"><%= rows[i].schedule_id%></div>
-      <div class="table-field"><%= rows[i].day%></div>
-      <div class="table-field"><%= rows[i].start_time%></div>
-      <div class="table-field"><%= rows[i].end_time%></div>
-    <%}%>
+  <%for(let i=0; i < schedules.length; i++) {%>
+      <div class="table-field"><%= schedules[i].schedule_id%></div>
+      <div class="table-field"><%= schedules[i].day%></div>
+      <div class="table-field"><%= schedules[i].start_time%></div>
+      <div class="table-field"><%= schedules[i].end_time%></div>
   <%}%>
 </div>

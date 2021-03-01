@@ -5,15 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= title%></title>
   <link rel="stylesheet" href="/static/index.css">
-  <!-- TODO: Probably tranfer this script to a page where it is used -->
   <script src="https://kit.fontawesome.com/0c3a972dba.js" crossorigin="anonymous"></script>
 </head>
 <body>
   <div class="body-container">
-    <%- include('partials/header'); -%>
+
+    <header>
+      <nav>
+        <img class="nav-logo" src="/static/assets/full_logo_dark.png" alt="mr.coffee white logo">
+        <%if(current_user) {%>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/schedule">Schedule management</a></li>
+            <li><a href="/users/<%= current_user.user_id%>"><i class="fas fa-user-circle"></i></a></li>
+            <li><a href="/logout"><i class="fas fa-sign-out-alt"></i></a></li>
+          </ul>
+        <%}%>
+      </nav>
+    </header>
+
     <main>
       <%- body%>
     </main>
+
   </div>
   <%- script%>
 </body>

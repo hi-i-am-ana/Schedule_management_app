@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
 
 * {
@@ -28,6 +27,10 @@ a {
   color: inherit;
 }
 
+i {
+  font-size: 2rem;
+}
+
 h1 {
   margin-bottom: 3rem;
   text-align: center;
@@ -42,15 +45,18 @@ main > h2:first-of-type {
   margin: 0 0 3rem;
 }
 
-/* TODO: Delete if not used */
-/* hr {
-  height: 1px;
-  background-color: black;
-  margin-bottom: 2rem;
-} */
+button {
+  cursor: pointer;
+  border: none;
+}
+
+button:focus {
+  outline: 0;
+}
 
 nav {
   width: 100%;
+  height: 6rem;
   display: flex;
   align-items: center;
 }
@@ -67,7 +73,7 @@ nav > ul {
 
 nav > ul a {
   display: block;
-  padding: 2rem 2rem;
+  padding: 1.5rem 2rem;
 }
 
 nav > ul a:hover {
@@ -80,12 +86,12 @@ main {
   padding: 3rem 0;
 }
 
-.signup-link {
+.centered-paragraph {
   margin-top: 3rem;
   text-align: center;
 }
 
-/* tables: users, schedules, user, user schedules */
+/* tables: schedules, user, user schedules, current user schedules */
 .table {
   display: flex;
   flex-wrap: wrap;
@@ -130,21 +136,16 @@ main {
   width: 25%;
 }
 
-/* end tables: users, schedules, user, user schedules */
-
-/* forms: user, user schedules */
-/* TODO: Delete if not used */
-/* .email-exists-alert {
-  display: none;
-  margin-bottom: 2rem;
-  color: red;
-  text-align: center;
+.current-user-schedule-table > .table-title, .current-user-schedule-table > .table-field {
+  width: 20%;
 }
 
-.display-block {
-  display: block;
-} */
+.delete-schedule-button:hover {
+  color: grey;
+}
+/* tables: schedules, user, user schedules, current user schedules */
 
+/* forms: new schedule, login, signup */
 form {
   width: 60%;
   margin: auto;
@@ -169,28 +170,22 @@ fieldset {
   border: 1px solid black;
 }
 
-button {
+.button {
   display: block;
   width: 100%;
   padding: 1.2rem 5rem;
   background-color: lightgrey;
-  border: none;
   box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.3);
   font-family: inherit;
   font-size: inherit;
-  cursor: pointer;
 }
 
-button:hover {
+.button:hover {
   background-color: #c6c6c6;  
 }
 
-button:active {
+.button:active {
   background-color: #bababa;
-}
-
-button:focus {
-  outline: 0;
 }
 
 .tooltip-form-alert {
@@ -217,11 +212,15 @@ button:focus {
   border-style: solid;
   border-color: #eaeaea transparent transparent transparent;
 }
-/* end forms: user, user schedules */
+
+#password-info {
+  color: inherit;
+  top: -10%;
+}
+/* end forms: new schedule, login, signup */
 
 /* modal */
 .modal {
-  display: none;
   position: fixed;
   z-index: 1;
   left: 0;
@@ -231,27 +230,33 @@ button:focus {
   background-color: rgba(0,0,0,0.5);
 }
 
-/* TODO: Delete if not used */
-/* .display-block {
-  display: block;
-} */
-
 .modal-content {
-  display: flex;
-  flex-direction: column;
-  width: 50%;
+  width: 40%;
   margin: 20% auto;
   padding: 2rem;
-  background: #ffffff;
+  background-color: #ffff;
+  text-align: center;
 }
 
 .modal-text {
   margin-bottom: 2rem;
 }
 
+.modal a {
+  text-decoration: none;
+}
+
 #close-modal-button {
-  margin: auto;
+  display: initial;
   width: initial;
+}
+
+.display-inline {
+  display: inline;
+}
+
+.red-border {
+  border: solid 1px red;
 }
 
 /* media 768 */
@@ -259,6 +264,16 @@ button:focus {
   html {
     font-size: 9px;
   }
+
+  body {
+    padding: 1rem 0;
+  }
+
+  .body-container {
+    width: 98%;
+    min-height: calc(100vh - 2rem);
+  }
+
   .table {
     width: 100%;
   }
@@ -269,15 +284,6 @@ button:focus {
 @media screen and (max-width: 576px) {
   html {
     font-size: 8px;
-  }
-
-  body {
-    padding: 1rem 0;
-  }
-
-  .body-container {
-    width: 98%;
-    min-height: calc(100vh - 2rem);
   }
 }
 /* end media 576 */

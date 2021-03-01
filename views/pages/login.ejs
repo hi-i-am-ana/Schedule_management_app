@@ -2,30 +2,24 @@
 
 <form id="form" method="post" action="/login" novalidate>
   <fieldset>
-    <label for="email">Email*</label>
-    <input class="form-field" type="email" id="email" name="email">
-    <span class="tooltip-form-alert" id="email-empty-alert">Please enter your email address</span>
-    <span class="tooltip-form-alert" id="email-invalid-alert">Email has invalid format</span>
+    <label for="email">Email *</label>
+    <input class="form-field <%if(emailEmptyAlert==='true'||emailInvalidAlert==='true'||emailMissingAlert==='true'){%>red-border<%}%>" type="email" id="email" name="email" value="<%if(email!==''){%><%= email%><%}%>">
+    <span class="tooltip-form-alert <%if(emailEmptyAlert==='true'){%>display-inline<%}%>" id="email-empty-alert">Please enter your email address</span>
+    <span class="tooltip-form-alert <%if(emailInvalidAlert==='true'){%>display-inline<%}%>" id="email-invalid-alert">Email has invalid format</span>
+    <span class="tooltip-form-alert <%if(emailMissingAlert==='true'){%>display-inline<%}%>" id="email-missing-alert">User with this email does not exist</span>
   </fieldset>
 
   <fieldset>
-    <label for="password">Password*</label>
-    <input class="form-field" type="password" id="password" name="password">
-    <span class="tooltip-form-alert" id="password-empty-alert">Please enter your password</span>
-    <span class="tooltip-form-alert" id="password-invalid-alert">Password has invalid format</span>
+    <label for="password">Password *</label>
+    <input class="form-field <%if(passwordEmptyAlert==='true'||passwordInvalidAlert==='true'||passwordIncorrectAlert==='true'){%>red-border<%}%>" type="password" id="password" name="password">
+    <span class="tooltip-form-alert <%if(passwordEmptyAlert==='true'){%>display-inline<%}%>" id="password-empty-alert">Please enter your password</span>
+    <span class="tooltip-form-alert <%if(passwordInvalidAlert==='true'){%>display-inline<%}%>" id="password-invalid-alert">Password has invalid format</span>
+    <span class="tooltip-form-alert <%if(passwordIncorrectAlert==='true'){%>display-inline<%}%>" id="password-incorrect-alert">You have entered incorrect password</span>
   </fieldset>
 
-  <button type="submit">Log In</button>
+  <button class="button" type="submit">Log In</button>
 </form>
 
-<p class= "signup-link">Don't have an account yet? <a href="/signup">Sign Up now</a></p>
+<p class= "centered-paragraph">Don't have an account yet? <a href="/signup">Sign Up now</a></p>
 
 <script src="/static/login.js" defer></script>
-
-<!-- Option 1 - For two buttons at top of form -->
-<!-- See: https://webdevtrick.com/html-login-and-signup-form/ -->
-
-<!-- <ul class="container">
-    <li class="tab active"><a href="pages/signup">Sign Up</a></li>
-    <li class="tab"><a href="pages/login">Log In</a></li>
-</ul> -->
