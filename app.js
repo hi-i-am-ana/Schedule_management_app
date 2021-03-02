@@ -54,6 +54,10 @@ app.use('/signup', signupRouter);
 const usersRouter = require('./routes/users.js');
 app.use('/users', usersRouter);
 
+// Add router for email/ requests
+const emailRouter = require('./routes/email.js');
+app.use('/email', emailRouter);
+
 // Add router for / requests (should be after all other routers)
 const homeRouter = require('./routes/index.js');
 app.use('/', homeRouter);

@@ -1,10 +1,10 @@
-INSERT into users(lastname, firstname, email, password) 
+INSERT into users(lastname, firstname, email, password, active) 
 VALUES
-('Musk', 'Elon', 'elon.musk@tesla.com', crypt('Gunsmoke&Lav1', gen_salt('bf'))),
-('Potter', 'Harry', 'harry.potter@gmail.com', crypt('Gunsmoke&Lav1', gen_salt('bf'))),
-('Karenina', 'Anna', 'anna.karenina@gmail.com', crypt('Gunsmoke&Lav1', gen_salt('bf'))),
-('OHara', 'Scarlett', 'scarlett.ohara@gmail.com', crypt('Gunsmoke&Lav1', gen_salt('bf'))),
-('Oldenburg', 'Elza', 'elsa@frozen.com', crypt('Gunsmoke&Lav1', gen_salt('bf')));
+('Musk', 'Elon', 'elon.musk@tesla.com', crypt('Gunsmoke&Lav1', gen_salt('bf')), true),
+('Potter', 'Harry', 'harry.potter@gmail.com', crypt('Gunsmoke&Lav1', gen_salt('bf')), true),
+('Karenina', 'Anna', 'anna.karenina@gmail.com', crypt('Gunsmoke&Lav1', gen_salt('bf')), true),
+('OHara', 'Scarlett', 'scarlett.ohara@gmail.com', crypt('Gunsmoke&Lav1', gen_salt('bf')), true),
+('Oldenburg', 'Elza', 'elsa@frozen.com', crypt('Gunsmoke&Lav1', gen_salt('bf')), true);
 
 INSERT INTO schedules(user_id, day, start_time, end_time)
 VALUES

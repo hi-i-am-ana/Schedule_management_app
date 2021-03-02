@@ -1,5 +1,7 @@
 const express = require('express');
+const crypto = require('crypto');
 const querystring = require('querystring');
+const nodemailer = require('nodemailer');
 const bcrypt = require('bcrypt');
 const db = require('../db/db.js');
 const loggedInCheck = require('../middleware.js').loggedInCheck;
@@ -93,13 +95,51 @@ signupRouter.post('/', (req, res) => {
           lastname: req.body.lastname,
           email: req.body.email.toLowerCase(),
           password: hash,
+          active: false
         };
-        db.none('INSERT INTO users (firstname, lastname, email, password) VALUES (${newUser.firstname}, ${newUser.lastname}, ${newUser.email}, ${newUser.password});', {newUser})
+        db.none('INSERT INTO users (firstname, lastname, email, password, active) VALUES (${newUser.firstname}, ${newUser.lastname}, ${newUser.email}, ${newUser.password}, ${newUser.active});', {newUser})
         .then(() => {
-          // Redirect back to signup page, but passing {modal: 'opened'} as a query string to get route => page will be rendered considering this additional info (with modal opened)
-          const query = querystring.stringify({modal: 'opened'});
-          res.redirect(`/signup?${query}`);
-          //res.redirect('/login');
+          // Genereate hash for email confirmation link and save it in database
+          const emailConfHash = crypto.randomBytes(30).toString('hex');
+          db.none('INSERT INTO email_confirmation (email, hash) values ($1, $2);', [newUser.email, emailConfHash])
+          .then(() => {
+            // Send email to confirm entered email address
+            console.log(process.env.GMAIL_HOST)
+            const transporter = nodemailer.createTransport({
+              host: process.env.GMAIL_HOST,
+              port: process.env.GMAIL_PORT,
+              secure: false,
+              auth: {
+                user: process.env.GMAIL_USERNAME,
+                pass: process.env.GMAIL_PASSWORD,
+              },
+              tls: {
+                rejectUnauthorized: false
+              }
+            });
+            const mailOptions = {
+              from: '"Mr.Coffee" <hi.i.am.anastasia@gmail.com>',
+              to: `${newUser.email}`,
+              subject: 'Please confirm your email address for Mr.Coffee schedule management system',
+              html: `
+              <h3>Thank you for creating your account on Mr.Coffee schedule management system</h3>
+              <p>Please confirm your email address:</p>
+              <a href="http://localhost:2046/email/${emailConfHash}">http://localhost:2046/email/${emailConfHash}</a>
+              `
+            };
+            transporter.sendMail(mailOptions, (err, info) => {
+              if (err) {
+                res.render('pages/error', {err: err, title: 'Error | Mr.Coffee Schedule Management', current_user: req.session.user})
+              } else {
+                console.log('Message sent: %s', info.messageId);
+                // Redirect back to signup page, but passing {modal: 'opened'} as a query string to get route => page will be rendered considering this additional info (with modal opened)
+                const query = querystring.stringify({modal: 'opened'});
+                res.redirect(`/signup?${query}`);
+                //res.redirect('/login'); 
+              };
+            });
+          })
+          .catch((err) => res.render('pages/error', {err: err, title: 'Error | Mr.Coffee Schedule Management', current_user: req.session.user}));
         })
         .catch((err) => res.render('pages/error', {err: err, title: 'Error | Mr.Coffee Schedule Management', current_user: req.session.user}));
       });
