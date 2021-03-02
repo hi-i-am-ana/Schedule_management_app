@@ -16,6 +16,7 @@ loginRouter.get('/', loggedInCheck, (req, res) => res.render('pages/login', {
   emailEmptyAlert: req.query.emailEmptyAlert,
   emailInvalidAlert: req.query.emailInvalidAlert,
   emailMissingAlert: req.query.emailMissingAlert,
+  emailUnconfirmedAlert: req.query.emailUnconfirmedAlert,
   passwordEmptyAlert: req.query.passwordEmptyAlert,
   passwordInvalidAlert: req.query.passwordInvalidAlert,
   passwordIncorrectAlert: req.query.passwordIncorrectAlert,
@@ -28,6 +29,7 @@ loginRouter.post('/', (req, res) => {
     emailEmptyAlert: false,
     emailInvalidAlert: false,
     emailMissingAlert: false,
+    emailUnconfirmedAlert: false,
     passwordEmptyAlert: false,
     passwordInvalidAlert: false,
     passwordIncorrectAlert: false,
@@ -69,10 +71,16 @@ loginRouter.post('/', (req, res) => {
           queryParams.email = req.body.email;
           const query = querystring.stringify(queryParams);
           res.redirect(`/login?${query}`);
+        } else if (!user.active) {
+          // If correct password but email hasn't been confirmed, redirect to form with alert and email value that was entered before submit (req.body.email)
+          setInvalid('emailUnconfirmedAlert');
+          queryParams.email = req.body.email;
+          const query = querystring.stringify(queryParams);
+          res.redirect(`/login?${query}`);
         } else {
-        // If correct password, create session
-        req.session.user = user;
-        res.redirect('/');
+          // If correct password and email has been confirmed, create session
+          req.session.user = user;
+          res.redirect('/');
         };
       });
     };

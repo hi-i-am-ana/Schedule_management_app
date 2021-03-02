@@ -5,7 +5,8 @@ CREATE TABLE IF NOT EXISTS users (
     lastname VARCHAR(50) NOT NULL,
     firstname VARCHAR(50) NOT NULL,
     email VARCHAR(50) NOT NULL UNIQUE,
-    password CHAR(60) NOT NULL
+    password CHAR(60) NOT NULL,
+    active BOOLEAN NOT NULL
 );
 
 DROP TABLE IF EXISTS schedules;
@@ -19,5 +20,17 @@ CREATE TABLE IF NOT EXISTS schedules (
 
     FOREIGN KEY(user_id) 
       REFERENCES users(user_id)
+      ON DELETE CASCADE
+);
+
+DROP TABLE IF EXISTS email_confirmation;
+
+CREATE TABLE IF NOT EXISTS email_confirmation (
+    hash_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    email VARCHAR(50) NOT NULL UNIQUE,
+    hash CHAR(60) NOT NULL,
+
+    FOREIGN KEY(email) 
+      REFERENCES users(email)
       ON DELETE CASCADE
 );

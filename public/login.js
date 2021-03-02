@@ -13,8 +13,9 @@ const passwordEmptyAlert = document.getElementById('password-empty-alert');
 const emailInvalidAlert = document.getElementById('email-invalid-alert');
 const passwordInvalidAlert = document.getElementById('password-invalid-alert');
 
-// Select email missing and password incorrect alerts - only to clear server-side validation
+// Select email missing and unconfirmed and password incorrect alerts - only to clear server-side validation
 const emailMissingAlert = document.getElementById('email-missing-alert');
+const emailUnconfirmedAlert = document.getElementById('email-unconfirmed-alert');
 const passwordIncorrectAlert = document.getElementById('password-incorrect-alert');
 
 // Create variable to save validation status
@@ -74,6 +75,7 @@ const clearValidation = () => {
   passwordInvalidAlert.classList.remove('display-inline');
 
   emailMissingAlert.classList.remove('display-inline');
+  emailUnconfirmedAlert.classList.remove('display-inline');
   passwordIncorrectAlert.classList.remove('display-inline');
 
   email.classList.remove('red-border');
