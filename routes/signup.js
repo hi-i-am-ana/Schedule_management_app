@@ -103,8 +103,8 @@ signupRouter.post('/', (req, res) => {
           const emailConfHash = crypto.randomBytes(30).toString('hex');
           db.none('INSERT INTO email_confirmation (email, hash) values ($1, $2);', [newUser.email, emailConfHash])
           .then(() => {
-            // Send email to confirm entered email address
-            console.log(process.env.GMAIL_HOST)
+            // TODO: Move email sending function to a separate module
+            // Send email with link to confirm entered email address
             const transporter = nodemailer.createTransport({
               host: process.env.GMAIL_HOST,
               port: process.env.GMAIL_PORT,
@@ -124,18 +124,17 @@ signupRouter.post('/', (req, res) => {
               html: `
               <h3>Thank you for creating your account on Mr.Coffee schedule management system</h3>
               <p>Please confirm your email address:</p>
-              <a href="http://${process.env.HOST}:${process.env.PORT}/email/${emailConfHash}">http://localhost:2046/email/${emailConfHash}</a>
+              <a href="http://${process.env.HOST}:${process.env.PORT}/email/${emailConfHash}">http://${process.env.HOST}:${process.env.PORT}/email/${emailConfHash}</a>
               `
             };
             transporter.sendMail(mailOptions, (err, info) => {
               if (err) {
                 res.render('pages/error', {err: err, title: 'Error | Mr.Coffee Schedule Management', current_user: req.session.user})
               } else {
-                console.log('Message sent: %s', info.messageId);
-                // Redirect back to signup page, but passing {modal: 'opened'} as a query string to get route => page will be rendered considering this additional info (with modal opened)
+                // console.log('Message sent: %s', info.messageId);
+                // Redirect back to signup page with modal opened
                 const query = querystring.stringify({modal: 'opened'});
                 res.redirect(`/signup?${query}`);
-                //res.redirect('/login'); 
               };
             });
           })

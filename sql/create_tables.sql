@@ -34,3 +34,13 @@ CREATE TABLE IF NOT EXISTS email_confirmation (
       REFERENCES users(email)
       ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS password_reset (
+    hash_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    email VARCHAR(50) NOT NULL UNIQUE,
+    hash CHAR(60) NOT NULL,
+
+    FOREIGN KEY(email) 
+      REFERENCES users(email)
+      ON DELETE CASCADE
+);
