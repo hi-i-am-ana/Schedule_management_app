@@ -51,11 +51,10 @@ scheduleRouter.post('/', (req, res) => {
   };
 
   db.none('INSERT INTO schedules (user_id, day, start_time, end_time) VALUES (${newSchedule.user_id}, ${newSchedule.day}, ${newSchedule.start_time}, ${newSchedule.end_time});', {newSchedule})
-  // Redirect back to schedule management page, but passing {modal: 'opened'} as a query string to get route => page will be rendered considering this additional info (with modal opened)
+  // Redirect back to schedule management page with modal opened
   .then(() => {
     const query = querystring.stringify({modal: 'opened'});
     res.redirect(`/schedule?${query}`);
-    //res.redirect('/schedule#user-schedules-title');
   })
   .catch((err) => res.render('pages/error', {err: err, title: 'Error | Mr.Coffee Schedule Management', current_user: req.session.user}));
 });

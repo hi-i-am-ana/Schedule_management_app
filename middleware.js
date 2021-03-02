@@ -9,7 +9,7 @@ const loggedOutCheck = (req, res, next) => {
   };
 };
 
-// Define middleware function to check for LOGGED-IN users (for login and signup pages), will redirect to home page
+// Define middleware function to check for LOGGED-IN users (for login, signup, email confirmation and forgot password pages), will redirect to home page
 const loggedInCheck = (req, res, next) => {
   if (req.session.user) {
     return res.redirect('/');
