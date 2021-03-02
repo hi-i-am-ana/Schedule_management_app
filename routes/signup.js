@@ -124,7 +124,7 @@ signupRouter.post('/', (req, res) => {
               html: `
               <h3>Thank you for creating your account on Mr.Coffee schedule management system</h3>
               <p>Please confirm your email address:</p>
-              <a href="http://localhost:2046/email/${emailConfHash}">http://localhost:2046/email/${emailConfHash}</a>
+              <a href="http://${process.env.HOST}:${process.env.PORT}/email/${emailConfHash}">http://localhost:2046/email/${emailConfHash}</a>
               `
             };
             transporter.sendMail(mailOptions, (err, info) => {
