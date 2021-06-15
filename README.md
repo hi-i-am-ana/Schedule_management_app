@@ -2,7 +2,7 @@
 
 A scheduling app for cafe Mr. Coffee.
 
-Server-side rendered aplication with authentication.
+Server-side rendered application with authentication.
 ## Languages/Frameworks/Technology used:
 - PostgreSQL, pg-promise package
 - HTML, CSS, JavaScript
