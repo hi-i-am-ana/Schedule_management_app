@@ -13,9 +13,14 @@ Server-side rendered aplication with authentication.
 
 ## Demo
 
-![home]()
-![schedule management]()
-![user profile]()
-![signup]()
-![login]()
-![forgot password]()
+![home](https://github.com/hi-i-am-ana/Schedule_management_app/blob/master/public/assets/home.png)
+
+![schedule management](https://github.com/hi-i-am-ana/Schedule_management_app/blob/master/public/assets/schedule_management.png)
+
+![user profile](https://github.com/hi-i-am-ana/Schedule_management_app/blob/master/public/assets/user_profile.png)
+
+![signup](https://github.com/hi-i-am-ana/Schedule_management_app/blob/master/public/assets/signup.png)
+
+![login](https://github.com/hi-i-am-ana/Schedule_management_app/blob/master/public/assets/login.png)
+
+![forgot password](https://github.com/hi-i-am-ana/Schedule_management_app/blob/master/public/assets/forgot_password.png)
