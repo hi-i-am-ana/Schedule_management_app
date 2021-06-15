@@ -14,14 +14,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JHawtree/Project4.git"
+    "url": "git+https://github.com/hi-i-am-ana/Schedule_management_app.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/JHawtree/Project4/issues"
+    "url": "https://github.com/hi-i-am-ana/Schedule_management_app/issues"
   },
-  "homepage": "https://github.com/JHawtree/Project4#readme",
+  "homepage": "https://github.com/hi-i-am-ana/Schedule_management_app#readme",
   "dependencies": {
     "bcrypt": "^5.0.0",
     "ejs": "^3.1.6",
